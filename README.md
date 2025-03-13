@@ -79,7 +79,7 @@ Olivia Feng (jyfeng19@stanford.edu)
 ## Acknowledgments
 Mentor: Mingjian Jiang  
 Course: CS224N, Stanford University (Winter 2025)  
-Framework: Adapted from [GSM-∞ by Zhou et al.](https://github.com/Infini-AI-Lab/gsm_infinite/tree/main/gsm-infinite) (2025)  
+Framework: A significant portion of this project, including problem generation and evaluation scripts, is adapted from [GSM-∞ by Zhou et al.](https://github.com/Infini-AI-Lab/gsm_infinite/tree/main/gsm-infinite) (2025)  
 
 
 
