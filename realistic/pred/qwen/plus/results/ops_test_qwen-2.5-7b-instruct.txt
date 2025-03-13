@@ -1,0 +1,17 @@
+length: 0, op: 4, acc: 0.95
+length: 0, op: 5, acc: 0.925
+length: 0, op: 6, acc: 0.875
+length: 0, op: 7, acc: 0.85
+length: 0, op: 8, acc: 0.775
+length: 0, op: 9, acc: 0.7
+length: 0, op: 10, acc: 0.575
+length: 0, op: 11, acc: 0.625
+length: 0, op: 12, acc: 0.625
+length: 0, op: 13, acc: 0.7
+length: 0, op: 14, acc: 0.65
+length: 0, op: 15, acc: 0.6
+length: 0, op: 16, acc: 0.375
+length: 0, op: 17, acc: 0.4
+length: 0, op: 18, acc: 0.2
+length: 0, op: 19, acc: 0.375
+length: 0, op: 20, acc: 0.225

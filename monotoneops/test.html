@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimPO: Simple Preference Optimization with a Reference-Free Reward</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 40px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2d3436;
+        }
+        h1 {
+            font-size: 34px;
+            color: #2d3436;
+            background: linear-gradient(to right, #0984e3, #00b894);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            border-bottom: 3px solid #0984e3;
+            padding-bottom: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h2 {
+            font-size: 26px;
+            color: #2d3436;
+            position: relative;
+            margin-top: 30px;
+            padding-left: 15px;
+        }
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: #00b894;
+            border-radius: 2px;
+        }
+        p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        .authors {
+            font-style: italic;
+            color: #636e72;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .section {
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .placeholder-img {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(45deg, #dfe6e9, #b2bec3);
+            border-radius: 8px;
+            text-align: center;
+            line-height: 250px;
+            color: #636e72;
+            font-style: italic;
+            font-size: 18px;
+            margin: 15px 0;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        ul {
+            margin: 15px 0;
+            padding-left: 25px;
+            list-style-type: none;
+        }
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+        ul li::before {
+            content: '➤';
+            position: absolute;
+            left: 0;
+            color: #0984e3;
+        }
+        a {
+            color: #0984e3;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #00b894;
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            font-size: 14px;
+            color: #636e72;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px dashed #b2bec3;
+            animation: slideUp 1s ease-in-out;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .section, footer {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <h1>SimPO: Simple Preference Optimization with a Reference-Free Reward</h1>
+    <p class="authors">Yu Meng<sup>1</sup>, Mengzhou Xia<sup>2</sup>, Danqi Chen<sup>2</sup><br>
+    <sup>1</sup>Computer Science Department, University of Virginia<br>
+    <sup>2</sup>Princeton Language and Intelligence (PLI), Princeton University</p>
+
+    <div class="section">
+        <h2>Abstract</h2>
+        <p>This paper presents SimPO, an innovative offline preference optimization algorithm tailored for aligning large language models (LLMs) with human preferences. Advancing beyond Direct Preference Optimization (DPO), SimPO employs a reference-free reward based on the average log probability of a sequence, enhancing computational efficiency and aligning rewards with generation metrics. A target reward margin further boosts performance by distinguishing winning and losing responses. Rigorous testing on benchmarks such as AlpacaEval 2 and Arena-Hard reveals SimPO’s superior performance, with top results from models like Llama3-8B-Instruct.</p>
+    </div>
+
+    <div class="section">
+        <h2>Key Contributions</h2>
+        <ul>
+            <li><strong>Reference-Free Reward:</strong> Utilizes a length-normalized average log probability, eliminating reference model dependency for reduced resource use.</li>
+            <li><strong>Target Reward Margin:</strong> Introduces a margin (γ) in the Bradley-Terry objective to ensure robust distinction between response types.</li>
+            <li><strong>Exceptional Performance:</strong> Outperforms DPO by up to 6.4 points on AlpacaEval 2 and 7.5 points on Arena-Hard, with minimal length exploitation.</li>
+            <li><strong>Leading Model:</strong> Llama3-8B-Instruct-SimPO achieves a 44.7 length-controlled win rate on AlpacaEval 2 (surpassing Claude 3 Opus) and 33.8 on Arena-Hard, marking it as the top 8B open-source model.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Methodology</h2>
+        <p>SimPO streamlines preference optimization by aligning rewards with generation likelihood. Its core elements include:</p>
+        <ul>
+            <li><strong>Length-Normalized Reward:</strong> Defined as \( r_{\text{SimPO}}(x, y) = \frac{\beta}{|y|} \log \pi_\theta(y \mid x) \), with \(\beta\) scaling rewards and normalization curbing length bias.</li>
+            <li><strong>Target Reward Margin:</strong> Employs a margin \(\gamma\) ensuring \( r(x, y_w) - r(x, y_l) > \gamma \) for improved generalization.</li>
+            <li><strong>Objective:</strong> Formulated as \( \mathcal{L}_{\text{SimPO}}(\pi_\theta) = -\mathbb{E}[\log \sigma(\frac{\beta}{|y_w|} \log \pi_\theta(y_w \mid x) - \frac{\beta}{|y_l|} \log \pi_\theta(y_l \mid x) - \gamma)] \).</li>
+        </ul>
+        <div class="placeholder-img">Placeholder for Figure 1: SimPO vs. DPO Reward Formulation</div>
+    </div>
+
+    <div class="section">
+        <h2>Results</h2>
+        <p>Evaluated across Base and Instruct setups with Mistral-7B and Llama3-8B, SimPO excels on AlpacaEval 2, Arena-Hard, and MT-Bench. Highlights include:</p>
+        <ul>
+            <li><strong>Performance Boost:</strong> Outstrips DPO by 3.6–6.4 points on AlpacaEval 2 LC win rate and 0.2–7.5 points on Arena-Hard across setups.</li>
+            <li><strong>Efficiency Gains:</strong> Cuts runtime by ~20% and GPU memory by ~10% compared to DPO by removing the reference model.</li>
+            <li><strong>Controlled Length:</strong> Maintains response quality without excessive verbosity (see Table 1).</li>
+        </ul>
+        <div class="placeholder-img">Placeholder for Table 4: Benchmark Results</div>
+    </div>
+
+    <div class="section">
+        <h2>Conclusion and Future Work</h2>
+        <p>SimPO delivers a streamlined, high-performing solution for preference optimization, achieving top-tier results without a reference model. Future research could delve into theoretical foundations, auto-tuning the margin, combining with iterative methods, and assessing safety and honesty.</p>
+        <p>Explore the full paper at <a href="https://github.com/princeton-nlp/SimPO" target="_blank">GitHub Repository</a>.</p>
+    </div>
+
+    <footer>
+        <p>Last updated: February 18, 2025 | Contact: <a href="mailto:yumeng5@virginia.edu">yumeng5@virginia.edu</a></p>
+    </footer>
+</body>
+</html>

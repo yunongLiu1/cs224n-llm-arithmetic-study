@@ -1,0 +1,6 @@
+98647 ttys067    0:00.01 bash -x test_generate3.sh
+98648 ttys067    0:07.55 python data_generate3.py --numprocs 8 --opmax 7 --ipmax 5 --total 100 --mod -1 --number_range 3 --target_length zero_context --d 3 --force --listoperations 4 5
+98653 ttys067    0:00.04 /Users/yangzhou/anaconda3/bin/python -c from multiprocessing.resource_tracker import main;main(7)
+98654 ttys067    0:20.87 /Users/yangzhou/anaconda3/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=10) --multiprocessing-fork
+98656 ttys067    0:18.18 /Users/yangzhou/anaconda3/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=12) --multiprocessing-fork
+98661 ttys067    0:12.87 /Users/yangzhou/anaconda3/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=8, pipe_handle=14) --multiprocessing-fork
